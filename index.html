@@ -443,6 +443,9 @@ nav{position:relative;z-index:2}
 <div style="display: flex; gap: 8px; flex-wrap: wrap; background: #FFFFFF; border: 1px solid #DADDF3; border-radius: 999px; padding: 6px"><input id="d-email" name="email" type="email" required autocomplete="email" placeholder="you@agency.com" style="flex: 1 1 200px; padding: 12px 14px; border: 0; background: transparent; font-size: 16px; font-family: inherit; outline-offset: 4px"><button id="demo-btn" class="btn" type="submit" style="padding: 12px 22px; border-radius: 999px; border: 0; background: #2F3ED8; color: #FFFFFF; font-weight: 600; font-size: 16px; font-family: inherit; cursor: pointer">Book a demo</button></div>
 <input type="hidden" name="_subject" value="New demo request from the Guad website">
 <input type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+<input type="hidden" name="_next" value="https://www.guad.app/?sent=1#demo">
+<input type="hidden" name="_captcha" value="false">
+<input type="hidden" name="_autoresponse" value="Thanks for your interest in Guad! We received your demo request and will reach out as soon as possible to set up a time. In the meantime, feel free to reply to hello@guad.app with any questions. — The Guad team">
 <p id="demo-status" role="status" aria-live="polite" style="margin: 4px 0 0; padding-left: 18px; font-size: 15px; min-height: 22px; color: #2F3ED8"></p>
 </form>
 </div>
@@ -461,9 +464,16 @@ nav{position:relative;z-index:2}
   var form=document.getElementById('demo-form');
   if(!form) return;
   var btn=document.getElementById('demo-btn');
-  form.addEventListener('submit',function(e){
+  var status=document.getElementById('demo-status');
+  form.addEventListener('submit',function(){
     btn.disabled=true; btn.textContent='Sending…';
   });
+  window.addEventListener('pageshow',function(){
+    btn.disabled=false; btn.textContent='Book a demo';
+  });
+  if(new URLSearchParams(location.search).get('sent')==='1'){
+    status.textContent="Thanks! We'll reach out as soon as possible to set up your demo.";
+  }
 })();
 </script>
 </body>
