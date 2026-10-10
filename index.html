@@ -461,37 +461,8 @@ nav{position:relative;z-index:2}
   var form=document.getElementById('demo-form');
   if(!form) return;
   var btn=document.getElementById('demo-btn');
-  var status=document.getElementById('demo-status');
-  var input=document.getElementById('d-email');
   form.addEventListener('submit',function(e){
-    e.preventDefault();
-    if(!input.value || !input.checkValidity()){
-      status.style.color='#B4441F';
-      status.textContent='Please enter a valid work email.';
-      input.focus(); return;
-    }
     btn.disabled=true; btn.textContent='Sending…';
-    status.style.color='#4D4B78'; status.textContent='';
-    fetch('https://formsubmit.co/ajax/746b4197cbaa1892c46bbc6c63e71480',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Accept':'application/json'},
-      body:JSON.stringify({
-        email:input.value,
-        _subject:'New demo request from the Guad website',
-        _template:'table',
-        _honey:''
-      })
-    }).then(function(r){return r.json();}).then(function(d){
-      if(d && (d.success===true || d.success==='true')){
-        status.style.color='#1E7F55';
-        status.textContent="Thanks! We'll reach out within one business day to set up your demo.";
-        form.reset(); btn.textContent='Request sent';
-      } else { throw new Error('fail'); }
-    }).catch(function(){
-      status.style.color='#B4441F';
-      status.innerHTML='Something went wrong. Please email us at <a href="mailto:hello@guad.app">hello@guad.app</a>.';
-      btn.disabled=false; btn.textContent='Book a demo';
-    });
   });
 })();
 </script>
